@@ -52,6 +52,7 @@ public class FringueController : MonoBehaviour {
 	
 	public void decreaseLife() {
 		life -= FingerManager.instance.fingerPower;
+		FingerManager.instance.increaseSliderValue();
 		
 		checkStatus();
 	}

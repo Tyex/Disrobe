@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class FingerManager : MonoBehaviour {
 
 	public int fingerPower;
+
+	public Text fingerPowerText;
+	public Slider fingerPowerSlider;
+
+	public float currentSliderValue;
+	public float sliderStep = 100f;
+	public float stepMultiplier = 3f;
 
 	//Singleton
 	static FingerManager mInst;
@@ -15,11 +23,30 @@ public class FingerManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		updateSlider();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		fingerPowerText.text = "x" + fingerPower;
+	}
+
+	public void increaseSliderValue() {
+		currentSliderValue += (float) fingerPower;
+
+		updateSlider();
+	}
+
+	public void updateSlider() {
+		fingerPowerSlider.value = currentSliderValue / getNextStepValue();
+
+		if(fingerPowerSlider.value >= 1f) {
+			fingerPower++;
+			currentSliderValue = 0;
+		}
+	}
+
+	public float getNextStepValue() {
+		return (float) fingerPower * sliderStep * (stepMultiplier * (float) fingerPower - 1f);
 	}
 }
