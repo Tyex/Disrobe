@@ -41,6 +41,10 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 		endPoint();
 	}
 
+	public void setFringue(FringueController fringueCtrl) {
+		fringue = fringueCtrl;
+	}
+
 	public void hit() {
 		fringue.decreaseLife();
 	}
@@ -69,5 +73,10 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 
 	public void endPoint() {
 
+	}
+
+	public void callNextPoint() {
+		fringue.nextPoint();
+		Destroy(gameObject);
 	}
 }

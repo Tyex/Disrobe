@@ -27,6 +27,10 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 		endPoint();
 	}
 
+	public void setFringue(FringueController fringueCtrl) {
+		fringue = fringueCtrl;
+	}
+
 	public void hit() {
 		fringue.decreaseLife();
 	}
@@ -66,5 +70,10 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 
 	public void endPoint() {
 
+	}
+
+	public void callNextPoint() {
+		fringue.nextPoint();
+		Destroy(gameObject);
 	}
 }

@@ -16,11 +16,20 @@ public class PointTapController : MonoBehaviour, IPointerDownHandler {
 	
 	}
 
+	public void setFringue(FringueController fringueCtrl) {
+		fringue = fringueCtrl;
+	}
+
 	public void validatePointAction() {
 		fringue.decreaseLife();
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
 		validatePointAction();
+	}
+
+	public void callNextPoint() {
+		fringue.nextPoint();
+		Destroy(gameObject);
 	}
 }

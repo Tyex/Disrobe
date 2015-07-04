@@ -39,7 +39,7 @@ public class GirlPanel : MonoBehaviour {
 	public void initCurrentFringue() {
 		if(fringues.Count > 0) {
 			fringues[currentFringueIndex].init();
-			fringues[currentFringueIndex].startPointsGeneration();
+			fringues[currentFringueIndex].startPointsSequence();
 		}
 	}
 
