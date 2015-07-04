@@ -7,6 +7,8 @@ public class GirlPanel : MonoBehaviour {
 	public List<FringueController> fringues = new List<FringueController>();
 	public int currentFringueIndex;
 
+	public Transform overlayRoot;
+
 	private Animator animator;
 
 	void Awake() {
@@ -26,7 +28,7 @@ public class GirlPanel : MonoBehaviour {
 
 	public void initFringues() {
 		currentFringueIndex = 0;
-		fringues.AddRange(transform.GetComponentsInChildren<FringueController>());
+//		fringues.AddRange(transform.GetComponentsInChildren<FringueController>());
 	}
 
 	public void nextFringue() {
@@ -38,7 +40,6 @@ public class GirlPanel : MonoBehaviour {
 
 	public void initCurrentFringue() {
 		if(fringues.Count > 0) {
-			fringues[currentFringueIndex].init();
 			fringues[currentFringueIndex].startPointsSequence();
 		}
 	}

@@ -21,14 +21,21 @@ public class FringueController : MonoBehaviour {
 	public float sequenceTotalTime;
 	public float currentSequenceTime;
 
+	public float delayTime = 1f;
+
+	private GameObject currentLifePanel;
+
+	void Awake() {
+		girlPanel = GetComponentInParent<GirlPanel>();
+	}
+
 	// Use this for initialization
 	void Start () {
-		girlPanel = GetComponentInParent<GirlPanel>();
-
 		foreach(GameObject seq in pointsSequence) {
 			RuntimeAnimatorController ac = seq.GetComponent<Animator>().runtimeAnimatorController;    //Get Animator controller
 			sequenceTotalTime += ac.animationClips[0].length;
 		}
+		sequenceTotalTime += (pointsSequence.Count - 1) * delayTime;
 	}
 	
 	// Update is called once per frame
@@ -37,17 +44,17 @@ public class FringueController : MonoBehaviour {
 	}
 	
 	public void init() {
-		GameObject lifePanel = Instantiate(defaultLifePanel) as GameObject;
-		lifePanel.transform.SetParent(lifePanelPosition, false);
-		lifePanel.transform.localPosition = Vector3.zero;
-		lifePanel.GetComponent<FringueLifePanel>().fringueCtrl = this;
-		
-		reset();
-	}
-	
-	public void reset() {
-		life = startingLife;
 		currentSequenceTime = 0;
+		life = startingLife;
+
+		if(currentLifePanel == null) {
+			currentLifePanel = Instantiate(defaultLifePanel) as GameObject;
+		}
+		currentLifePanel.transform.SetParent(lifePanelPosition, false);
+		currentLifePanel.GetComponent<FringueLifePanel>().fringueCtrl = this;
+
+		lifePanelPosition.SetParent(girlPanel.overlayRoot, false);
+		pointsRoot.SetParent(girlPanel.overlayRoot, false);
 	}
 	
 	public void decreaseLife() {
@@ -64,13 +71,17 @@ public class FringueController : MonoBehaviour {
 	}
 	
 	public void destroyFringue() {
+		BubbleManager.instance.sayOhYes();
+
 		girlPanel.nextFringue();
 		pointsRoot.gameObject.SetActive(false);
 		lifePanelPosition.gameObject.SetActive(false);
 		fringueSprite.GetComponent<Animator>().SetTrigger("fade");
+		Destroy(currentLifePanel);
 	}
 	
 	public void startPointsSequence() {
+		Invoke("init", delayTime);
 		currentSequenceIndex = 0;
 		initCurrentPoint();
 	}
@@ -82,13 +93,20 @@ public class FringueController : MonoBehaviour {
 	
 	public void initCurrentPoint() {
 		if(currentSequenceIndex < pointsSequence.Count) {
-			GameObject newPoint = Instantiate(pointsSequence[currentSequenceIndex]);
-			newPoint.transform.SetParent(pointsRoot, false);
-			newPoint.transform.localPosition = Vector3.zero;
-			newPoint.SendMessage("setFringue", this);
+			Invoke("instantiateNextPoint", delayTime);
 		} else {
-			reset();
-			startPointsSequence();
+			Invoke("restartSequence", delayTime);
 		}
+	}
+
+	public void instantiateNextPoint() {
+		GameObject newPoint = Instantiate(pointsSequence[currentSequenceIndex]);
+		newPoint.transform.SetParent(pointsRoot, false);
+		newPoint.SendMessage("setFringue", this);
+	}
+
+	public void restartSequence() {
+		BubbleManager.instance.sayTooSlow();
+		startPointsSequence();
 	}
 }

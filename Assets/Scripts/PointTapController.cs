@@ -6,9 +6,11 @@ public class PointTapController : MonoBehaviour, IPointerDownHandler {
 
 	public FringueController fringue;
 
+	public string bubbleText;
+
 	// Use this for initialization
 	void Start () {
-	
+		BubbleManager.instance.pop(bubbleText);
 	}
 	
 	// Update is called once per frame

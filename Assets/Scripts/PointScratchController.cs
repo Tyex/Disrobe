@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 
 public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler {
-
+	
 	public FringueController fringue;
 
 	public bool isTouched;
@@ -13,9 +13,13 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 	public float currentScratch;
 	public float lastScratch;
 
+	public string bubbleText;
+
 	// Use this for initialization
 	void Start () {
 		scratchStep = Screen.width * scratchStepScreenPercent;
+
+		BubbleManager.instance.pop(bubbleText);
 	}
 	
 	// Update is called once per frame

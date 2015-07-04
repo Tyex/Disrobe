@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler {
+public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler {
 
 	public FringueController fringue;
 
@@ -17,9 +17,11 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 
 	public float hitTime = 0;
 
+	public string bubbleText;
+
 	// Use this for initialization
 	void Start () {
-	
+		BubbleManager.instance.pop(bubbleText);
 	}
 	
 	// Update is called once per frame
@@ -50,11 +52,15 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
-		startRecordHits();
+//		startRecordHits();
 	}
 
 	public void OnPointerUp(PointerEventData eventData) {
-		stopRecordHits();
+//		stopRecordHits();
+	}
+
+	public void OnPointerEnter(PointerEventData eventData) {
+		startRecordHits();
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
