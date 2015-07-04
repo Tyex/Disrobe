@@ -8,6 +8,7 @@ public class FringueController : MonoBehaviour {
 	public int startingLife;
 	public int life;
 	public List<GameObject> pointsSequence = new List<GameObject>();
+	public List<AnimationClip> pointsAnimations = new List<AnimationClip>();
 	public int currentSequenceIndex;
 	
 	public GirlPanel girlPanel;
@@ -32,8 +33,18 @@ public class FringueController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		foreach(GameObject seq in pointsSequence) {
-			RuntimeAnimatorController ac = seq.GetComponent<Animator>().runtimeAnimatorController;    //Get Animator controller
-			sequenceTotalTime += ac.animationClips[0].length;
+			RuntimeAnimatorController myController = seq.GetComponent<Animator>().runtimeAnimatorController;
+			AnimatorOverrideController myOverrideController = new AnimatorOverrideController();
+			myOverrideController.runtimeAnimatorController = myController;
+			
+			myOverrideController["Anim"] = pointsAnimations[pointsSequence.IndexOf(seq)];
+			sequenceTotalTime += myOverrideController.animationClips[0].length;
+
+			// Put this line at the end because when you assign a controller on an Animator, unity rebind all the animated properties 
+			seq.GetComponent<Animator>().runtimeAnimatorController = myOverrideController;
+
+//			RuntimeAnimatorController ac = seq.GetComponent<Animator>().runtimeAnimatorController;    //Get Animator controller
+//			sequenceTotalTime += ac.animationClips[0].length;
 		}
 		sequenceTotalTime += (pointsSequence.Count - 1) * delayTime;
 	}
