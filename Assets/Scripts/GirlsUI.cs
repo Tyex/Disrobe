@@ -27,6 +27,7 @@ public class GirlsUI : MonoBehaviour {
 		girlPanels.AddRange(girlsContainer.GetComponentsInChildren<GirlPanel>());
 		for(int i = 1; i < girlPanels.Count; i++) {
 			girlPanels[i].setRight();
+//			girlPanels[i].gameObject.SetActive(false);
 		}
 
 		refreshButtonsState();
@@ -44,10 +45,12 @@ public class GirlsUI : MonoBehaviour {
 		if(val > 0) {
 			girlPanels[currentGirlIndex].goLeft();
 			currentGirlIndex += val;
+//			girlPanels[currentGirlIndex].gameObject.SetActive(true);
 			girlPanels[currentGirlIndex].comeFromRight();
 		} else {
 			girlPanels[currentGirlIndex].goRight();
 			currentGirlIndex += val;
+//			girlPanels[currentGirlIndex].gameObject.SetActive(true);
 			girlPanels[currentGirlIndex].comeFromLeft();
 		}
 

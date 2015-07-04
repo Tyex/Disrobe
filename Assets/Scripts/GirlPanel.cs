@@ -63,4 +63,8 @@ public class GirlPanel : MonoBehaviour {
 	public void comeFromLeft() {
 		animator.SetTrigger("comeFromLeft");
 	}
+
+	public void setInactive() {
+		gameObject.SetActive(false);
+	}
 }

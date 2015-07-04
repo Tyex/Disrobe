@@ -13,6 +13,9 @@ public class FingerManager : MonoBehaviour {
 	public float sliderStep = 100f;
 	public float stepMultiplier = 3f;
 
+	public Animator sliderAnimator;
+	public Animator textAnimator;
+
 	//Singleton
 	static FingerManager mInst;
 	static public FingerManager instance { get { return mInst; } }
@@ -35,6 +38,8 @@ public class FingerManager : MonoBehaviour {
 		currentSliderValue += (float) fingerPower;
 
 		updateSlider();
+
+		sliderAnimator.SetTrigger("flash");
 	}
 
 	public void updateSlider() {
@@ -43,6 +48,7 @@ public class FingerManager : MonoBehaviour {
 		if(fingerPowerSlider.value >= 1f) {
 			fingerPower++;
 			currentSliderValue = 0;
+			textAnimator.SetTrigger("bump");
 		}
 	}
 
