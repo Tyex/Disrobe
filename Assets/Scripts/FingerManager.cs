@@ -49,6 +49,7 @@ public class FingerManager : MonoBehaviour {
 			fingerPower++;
 			currentSliderValue = 0;
 			textAnimator.SetTrigger("bump");
+			AudioManager.instance.playSound("Kiss");
 		}
 	}
 

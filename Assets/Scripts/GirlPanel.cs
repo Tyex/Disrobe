@@ -64,6 +64,7 @@ public class GirlPanel : MonoBehaviour {
 		basePose.GetComponent<Animator>().SetTrigger("hide");
 
 		FXManager.instance.flashParticles.Play();
+		AudioManager.instance.playSound("Haan");
 	}
 
 	public void goLeft() {

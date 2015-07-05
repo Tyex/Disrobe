@@ -64,6 +64,7 @@ public class FringueController : MonoBehaviour {
 		life -= FingerManager.instance.fingerPower;
 		FingerManager.instance.increaseSliderValue();
 		currentLifePanel.GetComponent<Animator>().SetTrigger("score");
+		AudioManager.instance.playSound("Hit");
 		
 		checkStatus();
 	}
@@ -77,6 +78,7 @@ public class FringueController : MonoBehaviour {
 	public void destroyFringue() {
 		BubbleManager.instance.sayOhYes();
 		FXManager.instance.burstParticles.Play();
+		AudioManager.instance.playSound("Clothes");
 
 		girlPanel.nextFringue();
 		pointsRoot.gameObject.SetActive(false);
@@ -115,6 +117,7 @@ public class FringueController : MonoBehaviour {
 
 	public void restartSequence() {
 		BubbleManager.instance.sayTooSlow();
+		AudioManager.instance.playSound("Fail");
 		startPointsSequence();
 	}
 }
