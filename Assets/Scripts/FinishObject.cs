@@ -22,6 +22,7 @@ public class FinishObject : MonoBehaviour {
 		life -= FingerManager.instance.fingerPower;
 		FingerManager.instance.increaseSliderValue();
 		currentLifePanel.GetComponent<Animator>().SetTrigger("score");
+		AudioManager.instance.playSound("Hit");
 
 		if(life <= 0 && this.enabled) {
 			girlPanel.endPhase();
@@ -30,5 +31,9 @@ public class FinishObject : MonoBehaviour {
 			GetComponent<Animator>().SetTrigger("fade");
 			this.enabled = false;
 		}
+	}
+
+	public void deactivate() {
+		gameObject.SetActive(false);
 	}
 }

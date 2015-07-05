@@ -14,6 +14,9 @@ public class GirlPanel : MonoBehaviour {
 	public GameObject basePose;
 	public GameObject finishPose;
 
+	public GameObject disrobedBG;
+	public GameObject disrobedFX;
+
 	private Animator animator;
 
 	void Awake() {
@@ -62,6 +65,8 @@ public class GirlPanel : MonoBehaviour {
 	public void endPhase() {
 		finishPose.GetComponent<Animator>().SetTrigger("show");
 		basePose.GetComponent<Animator>().SetTrigger("hide");
+		disrobedBG.SetActive(true);
+		disrobedFX.SetActive(true);
 
 		FXManager.instance.flashParticles.Play();
 		AudioManager.instance.playSound("Haan");

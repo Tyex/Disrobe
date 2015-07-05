@@ -79,6 +79,7 @@ public class FringueController : MonoBehaviour {
 		BubbleManager.instance.sayOhYes();
 		FXManager.instance.burstParticles.Play();
 		AudioManager.instance.playSound("Clothes");
+		AudioManager.instance.playSound("Moaning" + Random.Range(1, 3));
 
 		girlPanel.nextFringue();
 		pointsRoot.gameObject.SetActive(false);

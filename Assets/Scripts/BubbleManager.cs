@@ -58,7 +58,7 @@ public class BubbleManager : MonoBehaviour {
 		while(selectFinishPhrase) {
 			pop(finishStrings[phrase++ % finishStrings.Length]);
 
-			yield return new WaitForSeconds(3f);
+			yield return new WaitForSeconds(5f);
 		}
 	}
 }
