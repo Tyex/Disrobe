@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler {
+public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler {
 	
 	public FringueController fringue;
 
@@ -45,6 +45,10 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 	
 	public void OnPointerUp(PointerEventData eventData) {
 		stopRecordHits();
+	}
+
+	public void OnPointerEnter(PointerEventData eventData) {
+		startRecordHits();
 	}
 	
 	public void OnPointerExit(PointerEventData eventData) {
