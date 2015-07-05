@@ -4,6 +4,7 @@ using System.Collections;
 public class FXManager : MonoBehaviour {
 
 	public ParticleSystem burstParticles;
+	public ParticleSystem flashParticles;
 
 	//Singleton
 	static FXManager mInst;

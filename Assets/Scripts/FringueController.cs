@@ -32,21 +32,6 @@ public class FringueController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		foreach(GameObject seq in pointsSequence) {
-//			RuntimeAnimatorController myController = seq.GetComponent<Animator>().runtimeAnimatorController;
-//			AnimatorOverrideController myOverrideController = new AnimatorOverrideController();
-//			myOverrideController.runtimeAnimatorController = myController;
-//			
-//			myOverrideController["Anim"] = pointsAnimations[pointsSequence.IndexOf(seq)];
-//			sequenceTotalTime += myOverrideController.animationClips[0].length;
-//
-//			// Put this line at the end because when you assign a controller on an Animator, unity rebind all the animated properties 
-//			seq.GetComponent<Animator>().runtimeAnimatorController = myOverrideController;
-//
-////			RuntimeAnimatorController ac = seq.GetComponent<Animator>().runtimeAnimatorController;    //Get Animator controller
-////			sequenceTotalTime += ac.animationClips[0].length;
-//		}
-
 		foreach(AnimatorOverrideController animOveride in pointsAnimations) {
 			sequenceTotalTime += animOveride.animationClips[0].length;
 		}
@@ -60,17 +45,19 @@ public class FringueController : MonoBehaviour {
 	}
 	
 	public void init() {
-		currentSequenceTime = 0;
-		life = startingLife;
+		if(pointsSequence.Count > 0) {
+			currentSequenceTime = 0;
+			life = startingLife;
 
-		if(currentLifePanel == null) {
-			currentLifePanel = Instantiate(defaultLifePanel) as GameObject;
+			if(currentLifePanel == null) {
+				currentLifePanel = Instantiate(defaultLifePanel) as GameObject;
+			}
+			currentLifePanel.transform.SetParent(lifePanelPosition, false);
+			currentLifePanel.GetComponent<FringueLifePanel>().fringueCtrl = this;
+
+			lifePanelPosition.SetParent(girlPanel.overlayRoot, false);
+			pointsRoot.SetParent(girlPanel.overlayRoot, false);
 		}
-		currentLifePanel.transform.SetParent(lifePanelPosition, false);
-		currentLifePanel.GetComponent<FringueLifePanel>().fringueCtrl = this;
-
-		lifePanelPosition.SetParent(girlPanel.overlayRoot, false);
-		pointsRoot.SetParent(girlPanel.overlayRoot, false);
 	}
 	
 	public void decreaseLife() {
@@ -110,17 +97,19 @@ public class FringueController : MonoBehaviour {
 	}
 	
 	public void initCurrentPoint() {
-		if(currentSequenceIndex < pointsSequence.Count) {
-			Invoke("instantiateNextPoint", delayTime);
-		} else {
-			Invoke("restartSequence", delayTime);
+		if(pointsSequence.Count > 0) {
+			if(currentSequenceIndex < pointsSequence.Count) {
+				Invoke("instantiateNextPoint", delayTime);
+			} else {
+				Invoke("restartSequence", delayTime);
+			}
 		}
 	}
 
 	public void instantiateNextPoint() {
 		GameObject newPoint = Instantiate(pointsSequence[currentSequenceIndex]);
 		newPoint.transform.SetParent(pointsRoot, false);
-		newPoint.SendMessage("setFringue", this);
+		newPoint.SendMessage("setFringue", this.gameObject);
 		newPoint.GetComponent<Animator>().runtimeAnimatorController = pointsAnimations[currentSequenceIndex];
 	}
 

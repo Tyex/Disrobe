@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler {
 	
-	public FringueController fringue;
+	public GameObject fringue;
 
 	public bool isTouched;
 	
@@ -14,12 +14,15 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 	public float lastScratch;
 
 	public string bubbleText;
-
+	public bool silent;
+	
 	// Use this for initialization
 	void Start () {
 		scratchStep = Screen.width * scratchStepScreenPercent;
 
-		BubbleManager.instance.pop(bubbleText);
+		if(!silent) {
+			BubbleManager.instance.pop(bubbleText);
+		}
 	}
 	
 	// Update is called once per frame
@@ -31,12 +34,12 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 		endPoint();
 	}
 
-	public void setFringue(FringueController fringueCtrl) {
+	public void setFringue(GameObject fringueCtrl) {
 		fringue = fringueCtrl;
 	}
 
 	public void hit() {
-		fringue.decreaseLife();
+		fringue.SendMessage("decreaseLife");
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
@@ -81,7 +84,7 @@ public class PointScratchController : MonoBehaviour, IPointerDownHandler, IPoint
 	}
 
 	public void callNextPoint() {
-		fringue.nextPoint();
+		fringue.SendMessage("nextPoint");
 		Destroy(gameObject);
 	}
 }

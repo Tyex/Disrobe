@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler {
 
-	public FringueController fringue;
+	public GameObject fringue;
 
 	public bool isTouched;
 
@@ -18,10 +18,13 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 	public float hitTime = 0;
 
 	public string bubbleText;
-
+	public bool silent;
+	
 	// Use this for initialization
 	void Start () {
-		BubbleManager.instance.pop(bubbleText);
+		if(!silent) {
+			BubbleManager.instance.pop(bubbleText);
+		}
 	}
 	
 	// Update is called once per frame
@@ -43,12 +46,12 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 		endPoint();
 	}
 
-	public void setFringue(FringueController fringueCtrl) {
+	public void setFringue(GameObject fringueCtrl) {
 		fringue = fringueCtrl;
 	}
 
 	public void hit() {
-		fringue.decreaseLife();
+		fringue.SendMessage("decreaseLife");
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
@@ -82,7 +85,7 @@ public class PointSlideController : MonoBehaviour, IPointerDownHandler, IPointer
 	}
 
 	public void callNextPoint() {
-		fringue.nextPoint();
+		fringue.SendMessage("nextPoint");
 		Destroy(gameObject);
 	}
 }

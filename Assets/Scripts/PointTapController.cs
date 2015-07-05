@@ -4,13 +4,16 @@ using System.Collections;
 
 public class PointTapController : MonoBehaviour, IPointerDownHandler {
 
-	public FringueController fringue;
+	public GameObject fringue;
 
 	public string bubbleText;
+	public bool silent;
 
 	// Use this for initialization
 	void Start () {
-		BubbleManager.instance.pop(bubbleText);
+		if(!silent) {
+			BubbleManager.instance.pop(bubbleText);
+		}
 	}
 	
 	// Update is called once per frame
@@ -18,12 +21,12 @@ public class PointTapController : MonoBehaviour, IPointerDownHandler {
 	
 	}
 
-	public void setFringue(FringueController fringueCtrl) {
+	public void setFringue(GameObject fringueCtrl) {
 		fringue = fringueCtrl;
 	}
 
 	public void validatePointAction() {
-		fringue.decreaseLife();
+		fringue.SendMessage("decreaseLife");
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
@@ -31,7 +34,7 @@ public class PointTapController : MonoBehaviour, IPointerDownHandler {
 	}
 
 	public void callNextPoint() {
-		fringue.nextPoint();
+		fringue.SendMessage("nextPoint");
 		Destroy(gameObject);
 	}
 }

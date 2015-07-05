@@ -5,9 +5,14 @@ using System.Collections.Generic;
 public class GirlPanel : MonoBehaviour {
 
 	public List<FringueController> fringues = new List<FringueController>();
+	public GameObject finishObject;
+
 	public int currentFringueIndex;
 
 	public Transform overlayRoot;
+
+	public GameObject basePose;
+	public GameObject finishPose;
 
 	private Animator animator;
 
@@ -19,6 +24,9 @@ public class GirlPanel : MonoBehaviour {
 	void Start () {
 		initFringues();
 		initCurrentFringue();
+		basePose.SetActive(true);
+//		finishPose.SetActive(false);
+		finishObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -35,6 +43,8 @@ public class GirlPanel : MonoBehaviour {
 		if(currentFringueIndex < fringues.Count - 1) {
 			currentFringueIndex++;
 			initCurrentFringue();
+		} else {
+			startFinishPhase();
 		}
 	}
 
@@ -42,6 +52,18 @@ public class GirlPanel : MonoBehaviour {
 		if(fringues.Count > 0) {
 			fringues[currentFringueIndex].startPointsSequence();
 		}
+	}
+
+	public void startFinishPhase() {
+		finishObject.SetActive(true);
+		BubbleManager.instance.sayFinish();
+	}
+
+	public void endPhase() {
+		finishPose.GetComponent<Animator>().SetTrigger("show");
+		basePose.GetComponent<Animator>().SetTrigger("hide");
+
+		FXManager.instance.flashParticles.Play();
 	}
 
 	public void goLeft() {

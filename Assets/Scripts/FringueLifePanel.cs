@@ -5,6 +5,9 @@ using System.Collections;
 public class FringueLifePanel : MonoBehaviour {
 
 	public FringueController fringueCtrl;
+	public FinishObject finishObject;
+
+	public float displayLife;
 
 	public Image timerImage;
 	public Text lifeText;
@@ -16,7 +19,12 @@ public class FringueLifePanel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		lifeText.text = fringueCtrl.life.ToString();
-		timerImage.fillAmount = 1f - (fringueCtrl.currentSequenceTime / fringueCtrl.sequenceTotalTime);
+		if(fringueCtrl != null) {
+			lifeText.text = fringueCtrl.life.ToString();
+			timerImage.fillAmount = 1f - (fringueCtrl.currentSequenceTime / fringueCtrl.sequenceTotalTime);
+		} else {
+			lifeText.text = finishObject.life.ToString();
+			timerImage.fillAmount = 1f;
+		}
 	}
 }

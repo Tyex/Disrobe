@@ -8,8 +8,11 @@ public class BubbleManager : MonoBehaviour {
 
 	public string[] tooSlowStrings;
 	public string[] ohYesStrings;
+	public string[] finishStrings;
 
 	private Animator animator;
+
+	public bool selectFinishPhrase;
 
 	//Singleton
 	static BubbleManager mInst;
@@ -43,5 +46,19 @@ public class BubbleManager : MonoBehaviour {
 	public  void sayOhYes() {
 		int random = Random.Range(0, ohYesStrings.Length);
 		pop(ohYesStrings[random]);
+	}
+
+	public void sayFinish() {
+		selectFinishPhrase = true;
+		StartCoroutine(sayFinishRoutine());
+	}
+
+	IEnumerator sayFinishRoutine() {
+		int phrase = 0;
+		while(selectFinishPhrase) {
+			pop(finishStrings[phrase++ % finishStrings.Length]);
+
+			yield return new WaitForSeconds(3f);
+		}
 	}
 }
